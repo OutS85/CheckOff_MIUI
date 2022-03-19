@@ -11,14 +11,22 @@ public class FileChooser extends JFrame
     private  JButton  btnOpenDir    = null;
     private  JButton  btnThanks   = null;
     private  JButton btnAndroidVersion = null;
-    public   String   WorkDir = null;
-    public FileChooser fc;
+    private JComboBox comboBox = null;
+    private FileChooser fc;
     private  JFileChooser fileChooser = null;
 
+    private Toolkit kit = Toolkit.getDefaultToolkit();
+    private Dimension screenSize;
+
+    public   String   WorkDir = null;
+
+    private final String[] androVer = {"Не выбрано", "9", "10", "11"};
     private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
             {"pdf" , "Adobe Reader(*.pdf)"}};
+
     public FileChooser() {
         super("Отключение проверок Android 10+");
+        screenSize = kit.getScreenSize();
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -32,11 +40,12 @@ public class FileChooser extends JFrame
 //        // Кнопка для выбора версии Android
         btnAndroidVersion = new JButton("Версия Android");
         btnAndroidVersion.setFont(font);
+        comboBox = new JComboBox(androVer);
 
         // Создание экземпляра JFileChooser
         fileChooser = new JFileChooser();
         // Подключение слушателей к кнопкам
-        addFileChooserListeners();
+        addBtnsListeners();
 
         // Размещение кнопок в интерфейсе
         JPanel contents = new JPanel();
@@ -47,16 +56,12 @@ public class FileChooser extends JFrame
 //        contents.add(btnFileFilter);
         setContentPane(contents);
         // Вывод окна на экран
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        int screenHeight = screenSize.height;
-        int screenWidth = screenSize.width;
-        setLocation(screenWidth/2-200, screenHeight/2-40);
+        setLocation(screenSize.width/2-200, screenSize.height/2-40);
         setSize(400, 120);
         setVisible(true);
     }
 
-    private void addFileChooserListeners() {
+    private void addBtnsListeners() {
         btnOpenDir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fileChooser.setDialogTitle("Выбор директории");
@@ -80,6 +85,26 @@ public class FileChooser extends JFrame
                 try {
                     Desktop.getDesktop().browse(new URL("https://4pda.ru/forum/index.php?showuser=2409458").toURI());
                 }catch (Exception ex){ }
+            }
+        });
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(comboBox.getSelectedItem());
+            }
+        });
+        btnAndroidVersion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame androVerFrame = new JFrame();
+                androVerFrame.setResizable(false);
+                androVerFrame.setTitle("Выберите версию Android");
+                JPanel contents = new JPanel();
+                contents.add(comboBox);
+                androVerFrame.setContentPane(contents);
+                androVerFrame.setLocation(screenSize.width/2-200, screenSize.height/2-40);
+                androVerFrame.setSize(400, 80);
+                androVerFrame.setVisible(true);
             }
         });
     }

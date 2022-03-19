@@ -1,6 +1,6 @@
 package outs.Lives.Belarus;
 
-public class MethodsList {
+public class MethodsListFor10and11 {
 
     public static final String frame1 = "(\\.method public checkCapability\\(Ljava/lang/String;I\\)Z[\\s\\S]+?)end method";
     public static final String reframe1 = ".method public checkCapability(Ljava/lang/String;I)Z\n.registers 4\n.param p2    # I\n.annotation build Landroid/content/pm/PackageParser\\$SigningDetails\\$CertCapabilities;\n.end annotation\n.end param\nconst/4 v0, 0x1\nreturn v0\n.end method";

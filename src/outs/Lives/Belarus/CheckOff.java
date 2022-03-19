@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static outs.Lives.Belarus.MethodsList.*;
+import static outs.Lives.Belarus.MethodsListFor10and11.*;
 
 public class CheckOff {
 

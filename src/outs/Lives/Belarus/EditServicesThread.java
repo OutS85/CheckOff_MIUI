@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static outs.Lives.Belarus.CheckOff.*;
-import static outs.Lives.Belarus.MethodsList.*;
+import static outs.Lives.Belarus.MethodsListFor10and11.*;
 
 public class EditServicesThread extends Thread {
 
