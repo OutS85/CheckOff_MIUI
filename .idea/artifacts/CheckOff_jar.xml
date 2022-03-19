@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CheckOff:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CheckOff_jar</output-path>
+    <root id="archive" name="CheckOff.jar">
+      <element id="module-output" name="CheckOff" />
+    </root>
+  </artifact>
+</component>
