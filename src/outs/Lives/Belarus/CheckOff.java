@@ -11,6 +11,8 @@ public class CheckOff {
 
     static EditServicesThread myThreadServices;
     static EditCoreThread myThreadCore;
+    static EditMiuiServicesThread myThreadMiuiServices;
+    static EditMiuiFrameworkThread myThreadMiuiFramework;
 
     volatile public static int num = 0;
     volatile public static int filescount = 0;
@@ -21,6 +23,8 @@ public class CheckOff {
     private static Pattern pattern;
     private static Matcher matcher;
 
+    private int androVersion;
+
     private static int isPatchedTarget = 0;
     public static boolean isExist = false;
     private static boolean isTargetProgram;
@@ -29,9 +33,10 @@ public class CheckOff {
     
 
 
-    public CheckOff(String workPath, FileChooser fc) throws Exception {
+    public CheckOff(String workPath, FileChooser fc, int androidVersion) throws Exception {
         long startTime = System.currentTimeMillis();
         WorkPath = workPath;
+        this.androVersion = androidVersion;
         System.out.println("Текущая папка: " + WorkPath);
         fc.dispose();
         if (!editFilesTarget(WorkPath)){
@@ -74,6 +79,10 @@ public class CheckOff {
         myThreadServices.start();
         myThreadCore = new EditCoreThread(WorkPath);
         myThreadCore.start();
+//        myThreadMiuiServices = new EditMiuiServicesThread(WorkPath);
+//        myThreadMiuiServices.start();
+//        myThreadMiuiFramework = new EditMiuiFrameworkThread(WorkPath);
+//        myThreadMiuiFramework.start();
         editFilesFramework(path);
 //        editFilesCore(path);
 //        editFilesServices(path);

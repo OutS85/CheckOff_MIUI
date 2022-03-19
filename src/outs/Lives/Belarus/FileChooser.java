@@ -8,17 +8,20 @@ import java.net.URL;
 
 public class FileChooser extends JFrame
 {
-    private  JButton  btnOpenDir    = null;
-    private  JButton  btnThanks   = null;
-    private  JButton btnAndroidVersion = null;
-    private JComboBox comboBox = null;
+    private  JButton  btnOpenDir;
+    private  JButton  btnThanks;
+    private  JButton btnAndroidVersion;
+    private JComboBox comboBox;
     private FileChooser fc;
-    private  JFileChooser fileChooser = null;
+    private  JFileChooser fileChooser;
+    private JFrame androVerFrame;
+    private JPanel androVerContent;
 
     private Toolkit kit = Toolkit.getDefaultToolkit();
     private Dimension screenSize;
 
-    public   String   WorkDir = null;
+    private String WorkDir = null;
+    private int androidVersion = 0;
 
     private final String[] androVer = {"Не выбрано", "9", "10", "11"};
     private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
@@ -31,6 +34,7 @@ public class FileChooser extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         fc = this;
+        createAndroVerFrame();
         // Кнопка создания диалогового окна для выбора директории
         Font font = new Font("Courier", Font.BOLD, 12);
         btnOpenDir = new JButton("Открыть директорию");
@@ -40,12 +44,11 @@ public class FileChooser extends JFrame
 //        // Кнопка для выбора версии Android
         btnAndroidVersion = new JButton("Версия Android");
         btnAndroidVersion.setFont(font);
-        comboBox = new JComboBox(androVer);
 
         // Создание экземпляра JFileChooser
         fileChooser = new JFileChooser();
         // Подключение слушателей к кнопкам
-        addBtnsListeners();
+        addListeners();
 
         // Размещение кнопок в интерфейсе
         JPanel contents = new JPanel();
@@ -61,7 +64,8 @@ public class FileChooser extends JFrame
         setVisible(true);
     }
 
-    private void addBtnsListeners() {
+    private void addListeners() {
+
         btnOpenDir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fileChooser.setDialogTitle("Выбор директории");
@@ -75,7 +79,7 @@ public class FileChooser extends JFrame
                     return;
                 }
                 try {
-                    new CheckOff(WorkDir, fc);
+                    new CheckOff(WorkDir, fc, androidVersion);
                 }catch (Exception e1){}
             }
         });
@@ -90,24 +94,29 @@ public class FileChooser extends JFrame
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(comboBox.getSelectedItem());
+                System.out.println(comboBox.getSelectedIndex());
             }
         });
         btnAndroidVersion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame androVerFrame = new JFrame();
-                androVerFrame.setResizable(false);
-                androVerFrame.setTitle("Выберите версию Android");
-                JPanel contents = new JPanel();
-                contents.add(comboBox);
-                androVerFrame.setContentPane(contents);
+                androVerFrame.setContentPane(androVerContent);
                 androVerFrame.setLocation(screenSize.width/2-200, screenSize.height/2-40);
                 androVerFrame.setSize(400, 80);
                 androVerFrame.setVisible(true);
             }
         });
     }
+
+    private void createAndroVerFrame() {
+
+    androVerFrame = new JFrame();
+    androVerFrame.setResizable(false);
+    androVerFrame.setTitle("Выберите версию Android");
+    androVerContent = new JPanel();
+    comboBox = new JComboBox(androVer);
+    androVerContent.add(comboBox);
+}
 
      private void close(){
         dispose();
