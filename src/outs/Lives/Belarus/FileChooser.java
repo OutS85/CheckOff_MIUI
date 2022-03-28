@@ -20,11 +20,11 @@ public class FileChooser extends JFrame implements ActionListener
 
     private final FileChooser fc;
     private JFileChooser fileChooser;
-    private JFrame androVerFrame;
     private JPanel androVerContent;
     private JPanel mainContent;
     private JLabel labelDir;
     private JLabel labelAndroVer;
+    private JDialog dialog;
 
     private final Dimension screenSize;
     private final Font font;
@@ -37,7 +37,8 @@ public class FileChooser extends JFrame implements ActionListener
 //    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
 //            {"pdf" , "Adobe Reader(*.pdf)"}};
 
-    public FileChooser() {
+    public FileChooser()
+    {
         super("Отключение проверок Android 10+");
         fc = this;
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -48,41 +49,23 @@ public class FileChooser extends JFrame implements ActionListener
         createMainContent();
     }
 
-    private void createMainElements(){
-
+    private void createMainElements()
+    {
         fileChooser = new JFileChooser();
         mainContent = new JPanel();
-        androVerFrame = new JFrame();
         androVerContent = new JPanel();
         labelDir = new JLabel("Директория не указана!");
         labelDir.setForeground(Color.RED);
         labelAndroVer = new JLabel("Версия Android не указана!");
         labelAndroVer.setForeground(Color.RED);
+        dialog = new JDialog(this, "Выберите версию Андройд", true);
         createMainBtns();
         createAndroVerRadioBtns();
         createAndroVerPanel();
     }
 
-    private void createAndroVerPanel() {
-
-    androVerFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-    androVerFrame.setTitle("Выберите версию Android");
-    androVerContent.setLayout(new BoxLayout(androVerContent, BoxLayout.Y_AXIS));
-    androVerContent.add(andr9);
-    andr9.setAlignmentX(Container.CENTER_ALIGNMENT);
-    androVerContent.add(andr10);
-    andr10.setAlignmentX(Container.CENTER_ALIGNMENT);
-    androVerContent.add(andr11);
-    andr11.setAlignmentX(Container.CENTER_ALIGNMENT);
-    androVerContent.add(andr12);
-    andr12.setAlignmentX(Container.CENTER_ALIGNMENT);
-    androVerContent.add(btnOk);
-    btnOk.setAlignmentX(Container.CENTER_ALIGNMENT);
-    btnOk.setSize(60, 30);
-    }
-
-    private void createMainContent(){
-
+    private void createMainContent()
+    {
         //Свойства окна
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -90,6 +73,7 @@ public class FileChooser extends JFrame implements ActionListener
         setLocation(screenSize.width/2-200, screenSize.height/2-40);
         setSize(700, 200);
         mainContent.setLayout(new GridLayout(3, 2, 20, 20));
+        mainContent.setBackground(Color.gray);
         mainContent.add(btnOpenDir);
         mainContent.add(labelDir);
         mainContent.add(btnAndroidVersion);
@@ -97,10 +81,28 @@ public class FileChooser extends JFrame implements ActionListener
         mainContent.add(btnStart);
         mainContent.add(btnThanks);
         setContentPane(mainContent);
+        setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
 
-    private void createMainBtns(){
+    private void createAndroVerPanel()
+    {
+        androVerContent.setLayout(new BoxLayout(androVerContent, BoxLayout.Y_AXIS));
+        androVerContent.add(andr9);
+        andr9.setAlignmentX(Container.CENTER_ALIGNMENT);
+        androVerContent.add(andr10);
+        andr10.setAlignmentX(Container.CENTER_ALIGNMENT);
+        androVerContent.add(andr11);
+        andr11.setAlignmentX(Container.CENTER_ALIGNMENT);
+        androVerContent.add(andr12);
+        andr12.setAlignmentX(Container.CENTER_ALIGNMENT);
+        androVerContent.add(btnOk);
+        btnOk.setAlignmentX(Container.CENTER_ALIGNMENT);
+        btnOk.setSize(90, 45);
+    }
+
+    private void createMainBtns()
+    {
         btnOpenDir = new JButton("Открыть директорию");
         btnOpenDir.setFont(font);
         btnThanks = new JButton("Сказать спасибо автору ;)");
@@ -113,8 +115,8 @@ public class FileChooser extends JFrame implements ActionListener
         btnStart.setEnabled(false);
     }
 
-    private void createAndroVerRadioBtns(){
-
+    private void createAndroVerRadioBtns()
+    {
         andr9 = new JRadioButton("Андройд 9");
         andr9.setFont(font);
         andr10 = new JRadioButton("Андройд 10");
@@ -130,8 +132,8 @@ public class FileChooser extends JFrame implements ActionListener
         btngroup.add(andr12);
     }
 
-    private void addListeners() {
-
+    private void addListeners()
+    {
         btnOpenDir.addActionListener(this);
         btnThanks.addActionListener(this);
         btnAndroidVersion.addActionListener(this);
@@ -140,8 +142,8 @@ public class FileChooser extends JFrame implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void actionPerformed(ActionEvent e)
+    {
         if (e.getSource() == btnOpenDir){
             fileChooser.setDialogTitle("Выбор директории");
             // Определение режима - только каталог
@@ -165,10 +167,11 @@ public class FileChooser extends JFrame implements ActionListener
                 Desktop.getDesktop().browse(new URL("https://4pda.ru/forum/index.php?showuser=2409458").toURI());
             }catch (Exception ignored){ }
         }else if (e.getSource() == btnAndroidVersion){
-            androVerFrame.setContentPane(androVerContent);
-            androVerFrame.setLocation(screenSize.width/2-200, screenSize.height/2-40);
-            androVerFrame.setSize(400, 200);
-            androVerFrame.setVisible(true);
+            dialog.setLocation(screenSize.width/2-200, screenSize.height/2-40);
+            dialog.setSize(400, 200);
+            dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+            dialog.setContentPane(androVerContent);
+            dialog.setVisible(true);
         }else if (e.getSource() == btnStart) {
             try {
                 new CheckOff(WorkDir, fc, androidVersion);
@@ -203,12 +206,9 @@ public class FileChooser extends JFrame implements ActionListener
                 btnStart.setEnabled(true);
                 btnStart.setBackground(Color.GREEN);
             }
-            androVerFrame.dispose();
+            dialog.dispose();
         }
     }
 
-    private void close(){
-        dispose();
-    }
 }
 
