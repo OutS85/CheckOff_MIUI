@@ -17,7 +17,6 @@ public class FileChooser extends JFrame implements ActionListener
     private JRadioButton andr10;
     private JRadioButton andr11;
     private JRadioButton andr12;
-    private ButtonGroup btngroup;
 
     private final FileChooser fc;
     private JFileChooser fileChooser;
@@ -32,17 +31,18 @@ public class FileChooser extends JFrame implements ActionListener
 
     private String WorkDir = null;
     private int androidVersion = 0;
+    private boolean condDir = false;
+    private boolean condVer = false;
 
-    private final String[] androVer = {"Не выбрано", "9", "10", "11"};
-    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
-            {"pdf" , "Adobe Reader(*.pdf)"}};
+//    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
+//            {"pdf" , "Adobe Reader(*.pdf)"}};
 
     public FileChooser() {
         super("Отключение проверок Android 10+");
         fc = this;
         Toolkit kit = Toolkit.getDefaultToolkit();
         screenSize = kit.getScreenSize();
-        font = new Font("Courier", Font.BOLD, 12);
+        font = new Font("Courier", Font.BOLD, 14);
         createMainElements();
         addListeners();
         createMainContent();
@@ -56,7 +56,7 @@ public class FileChooser extends JFrame implements ActionListener
         androVerContent = new JPanel();
         labelDir = new JLabel("Директория не указана!");
         labelDir.setForeground(Color.RED);
-        labelAndroVer = new JLabel("Версия Android не указана!i");
+        labelAndroVer = new JLabel("Версия Android не указана!");
         labelAndroVer.setForeground(Color.RED);
         createMainBtns();
         createAndroVerRadioBtns();
@@ -65,20 +65,20 @@ public class FileChooser extends JFrame implements ActionListener
 
     private void createAndroVerPanel() {
 
-    androVerFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    androVerFrame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     androVerFrame.setTitle("Выберите версию Android");
-    androVerContent.setLayout(new GridLayout(5, 1, 0, 0));
+    androVerContent.setLayout(new BoxLayout(androVerContent, BoxLayout.Y_AXIS));
     androVerContent.add(andr9);
-    andr9.setHorizontalAlignment(JRadioButton.CENTER);
+    andr9.setAlignmentX(Container.CENTER_ALIGNMENT);
     androVerContent.add(andr10);
-    andr10.setHorizontalAlignment(JRadioButton.CENTER);
+    andr10.setAlignmentX(Container.CENTER_ALIGNMENT);
     androVerContent.add(andr11);
-    andr11.setHorizontalAlignment(JRadioButton.CENTER);
+    andr11.setAlignmentX(Container.CENTER_ALIGNMENT);
     androVerContent.add(andr12);
-    andr12.setHorizontalAlignment(JRadioButton.CENTER);
+    andr12.setAlignmentX(Container.CENTER_ALIGNMENT);
     androVerContent.add(btnOk);
-    btnOk.setHorizontalAlignment(JButton.CENTER);
-    btnOk.setSize(40, 20);
+    btnOk.setAlignmentX(Container.CENTER_ALIGNMENT);
+    btnOk.setSize(60, 30);
     }
 
     private void createMainContent(){
@@ -87,7 +87,6 @@ public class FileChooser extends JFrame implements ActionListener
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        setVisible(true);
         setLocation(screenSize.width/2-200, screenSize.height/2-40);
         setSize(700, 200);
         mainContent.setLayout(new GridLayout(3, 2, 20, 20));
@@ -98,6 +97,7 @@ public class FileChooser extends JFrame implements ActionListener
         mainContent.add(btnStart);
         mainContent.add(btnThanks);
         setContentPane(mainContent);
+        setVisible(true);
     }
 
     private void createMainBtns(){
@@ -123,7 +123,7 @@ public class FileChooser extends JFrame implements ActionListener
         andr11.setFont(font);
         andr12 = new JRadioButton("Андройд 12");
         andr12.setFont(font);
-        btngroup = new ButtonGroup();
+        ButtonGroup btngroup = new ButtonGroup();
         btngroup.add(andr9);
         btngroup.add(andr10);
         btngroup.add(andr11);
@@ -136,6 +136,7 @@ public class FileChooser extends JFrame implements ActionListener
         btnThanks.addActionListener(this);
         btnAndroidVersion.addActionListener(this);
         btnStart.addActionListener(this);
+        btnOk.addActionListener(this);
     }
 
     @Override
@@ -154,9 +155,11 @@ public class FileChooser extends JFrame implements ActionListener
             }
             labelDir.setText(WorkDir);
             labelDir.setForeground(Color.GREEN);
-//            try {
-//                new CheckOff(WorkDir, fc, androidVersion);
-//            }catch (Exception ignored){}
+            condDir = true;
+            if (condVer){
+                btnStart.setEnabled(true);
+                btnStart.setBackground(Color.GREEN);
+            }
         }else if (e.getSource() == btnThanks){
             try {
                 Desktop.getDesktop().browse(new URL("https://4pda.ru/forum/index.php?showuser=2409458").toURI());
@@ -167,15 +170,40 @@ public class FileChooser extends JFrame implements ActionListener
             androVerFrame.setSize(400, 200);
             androVerFrame.setVisible(true);
         }else if (e.getSource() == btnStart) {
+            try {
+                new CheckOff(WorkDir, fc, androidVersion);
+            }catch (Exception ignored){}
+        }else if (e.getSource() == btnOk){
             if (andr9.isSelected()) {
-                System.out.println("Android 9");
+                androidVersion = 9;
+                labelAndroVer.setText("Android 9");
+                labelAndroVer.setFont(font);
+                labelAndroVer.setForeground(Color.GREEN);
+                condVer = true;
             } else if (andr10.isSelected()) {
-                System.out.println("Android 10");
+                androidVersion = 10;
+                labelAndroVer.setText("Android 10");
+                labelAndroVer.setFont(font);
+                labelAndroVer.setForeground(Color.GREEN);
+                condVer = true;
             } else if (andr11.isSelected()) {
-                System.out.println("Android 11");
-            } else if (andr11.isSelected()) {
-                System.out.println("Android 12");
+                androidVersion = 11;
+                labelAndroVer.setText("Android 11");
+                labelAndroVer.setFont(font);
+                labelAndroVer.setForeground(Color.GREEN);
+                condVer = true;
+            } else if (andr12.isSelected()) {
+                androidVersion = 12;
+                labelAndroVer.setText("Android 12");
+                labelAndroVer.setFont(font);
+                labelAndroVer.setForeground(Color.GREEN);
+                condVer = true;
             }
+            if (condVer && condDir){
+                btnStart.setEnabled(true);
+                btnStart.setBackground(Color.GREEN);
+            }
+            androVerFrame.dispose();
         }
     }
 
