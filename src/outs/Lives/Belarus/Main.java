@@ -1,5 +1,7 @@
 package outs.Lives.Belarus;
 
+import outs.Lives.Belarus.CheckOff.CheckOffWindow;
+
 import javax.swing.*;
 
 public class Main {
@@ -15,6 +17,6 @@ public class Main {
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        new FileChooser();
+        new CheckOffWindow();
     }
 }

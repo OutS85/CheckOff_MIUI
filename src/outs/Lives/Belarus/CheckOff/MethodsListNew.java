@@ -1,4 +1,4 @@
-package outs.Lives.Belarus;
+package outs.Lives.Belarus.CheckOff;
 
 public class MethodsListNew
 {

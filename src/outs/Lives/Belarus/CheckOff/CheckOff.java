@@ -1,11 +1,11 @@
-package outs.Lives.Belarus;
+package outs.Lives.Belarus.CheckOff;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static outs.Lives.Belarus.MethodsListNew.*;
+import static outs.Lives.Belarus.CheckOff.MethodsListNew.*;
 
 public class CheckOff {
 
@@ -33,7 +33,7 @@ public class CheckOff {
     
 
 
-    public CheckOff(String workPath, FileChooser fc, int androidVersion) throws Exception {
+    public CheckOff(String workPath, CheckOffWindow fc, int androidVersion) throws Exception {
         long startTime = System.currentTimeMillis();
         WorkPath = workPath;
         this.androidVersion = androidVersion;

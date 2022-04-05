@@ -1,12 +1,12 @@
-package outs.Lives.Belarus;
+package outs.Lives.Belarus.CheckOff;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static outs.Lives.Belarus.CheckOff.*;
-import static outs.Lives.Belarus.MethodsListNew.*;
+import static outs.Lives.Belarus.CheckOff.CheckOff.*;
+import static outs.Lives.Belarus.CheckOff.MethodsListNew.*;
 
 public class EditCoreThread extends Thread{
 

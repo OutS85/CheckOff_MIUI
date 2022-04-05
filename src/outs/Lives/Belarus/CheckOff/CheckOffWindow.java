@@ -1,4 +1,4 @@
-package outs.Lives.Belarus;
+package outs.Lives.Belarus.CheckOff;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class FileChooser extends JFrame implements ActionListener
+public class CheckOffWindow extends JFrame implements ActionListener
 {
     private  JButton  btnOpenDir;
     private  JButton  btnThanks;
@@ -18,7 +18,7 @@ public class FileChooser extends JFrame implements ActionListener
     private JRadioButton andr11;
     private JRadioButton andr12;
 
-    private final FileChooser fc;
+    private final CheckOffWindow fc;
     private JFileChooser fileChooser;
     private JPanel androVerContent;
     private JPanel mainContent;
@@ -37,7 +37,7 @@ public class FileChooser extends JFrame implements ActionListener
 //    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
 //            {"pdf" , "Adobe Reader(*.pdf)"}};
 
-    public FileChooser()
+    public CheckOffWindow()
     {
         super("Отключение проверок подписи и целостности MIUI");
         fc = this;
@@ -148,7 +148,7 @@ public class FileChooser extends JFrame implements ActionListener
             fileChooser.setDialogTitle("Выбор директории");
             // Определение режима - только каталог
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int result = fileChooser.showOpenDialog(FileChooser.this);
+            int result = fileChooser.showOpenDialog(CheckOffWindow.this);
             if (result == JFileChooser.APPROVE_OPTION ){
                 WorkDir = fileChooser.getSelectedFile().getAbsolutePath();
             }else if (WorkDir == null){
