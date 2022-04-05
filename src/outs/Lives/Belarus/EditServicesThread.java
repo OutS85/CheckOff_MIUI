@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static outs.Lives.Belarus.CheckOff.*;
-import static outs.Lives.Belarus.MethodsListFor10and11.*;
+import static outs.Lives.Belarus.MethodsListNew.*;
 
 public class EditServicesThread extends Thread {
 
@@ -31,7 +31,11 @@ public class EditServicesThread extends Thread {
 
     private void editFilesServices(String path) throws IOException {
 
-        if (isPatched == 14){
+        if (androidVersion != 12){
+            if (isPatched == 14) {
+                return;
+            }
+        }else if (isPatched == 15){
             return;
         }
         File[] f = (new File(path)).listFiles();
@@ -56,12 +60,18 @@ public class EditServicesThread extends Thread {
                                 System.out.println("\n" + num +". Метод checkAppSignature найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
-                        if (!se2) {
-                            matcher = Pattern.compile(serv2).matcher(resource);
+                        if (!se2 && !se21) {
+                            if (androidVersion != 12){
+                                matcher = Pattern.compile(serv2).matcher(resource);
+                            }matcher = Pattern.compile(serv21).matcher(resource);
                             if (matcher.find()) {
                                 isFound = true;
-                                se2 = true;
-                                resource = matcher.replaceAll(reserv2);
+                                if (androidVersion != 12){
+                                    se2 = true;
+                                }se21 = true;
+                                if (androidVersion != 12){
+                                    resource = matcher.replaceAll(reserv2);
+                                }resource = matcher.replaceAll(reserv21);
                                 BufferedWriter smaliWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileEntry), "UTF-8"));
                                 smaliWriter.write(resource);
                                 smaliWriter.close();

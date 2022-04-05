@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static outs.Lives.Belarus.MethodsListFor10and11.*;
+import static outs.Lives.Belarus.MethodsListNew.*;
 
 public class CheckOff {
 
@@ -23,20 +23,20 @@ public class CheckOff {
     private static Pattern pattern;
     private static Matcher matcher;
 
-    private int androVersion;
+    public static int androidVersion;
 
     private static int isPatchedTarget = 0;
     public static boolean isExist = false;
     private static boolean isTargetProgram;
     public static boolean isFound = false;
-    public static boolean fr1 = false, fr2 = false, fr3 = false, se1 = false, se2 = false, se3 = false, se4 = false, se5 = false, se6 = false, se7 = false, co1 = false, co2 = false, co3 = false, co4 = false;
+    public static boolean fr1 = false, fr2 = false, fr3 = false, se1 = false, se2 = false, se21 = false, se3 = false, se4 = false, se5 = false, se51 = false, se6 = false, se7 = false, co1 = false, co2 = false, co3 = false, co4 = false;
     
 
 
     public CheckOff(String workPath, FileChooser fc, int androidVersion) throws Exception {
         long startTime = System.currentTimeMillis();
         WorkPath = workPath;
-        this.androVersion = androidVersion;
+        this.androidVersion = androidVersion;
         System.out.println("Текущая папка: " + WorkPath);
         fc.dispose();
         if (!editFilesTarget(WorkPath)){
@@ -56,7 +56,9 @@ public class CheckOff {
             patched = isPatchedTarget;
         }else
             patched = isPatched;
-        System.out.println("\nПропатчено методов: " + patched + " из 14");
+        if (androidVersion == 12){
+            System.out.println("\nПропатчено методов: " + patched + " из 15");
+        }else System.out.println("\nПропатчено методов: " + patched + " из 14");
         if (patched == 0){
             System.out.println("\nНеудачно! Не найдено ни одного соответствующего метода.");
         }else if (patched < 14 & patched > 0){
@@ -79,18 +81,26 @@ public class CheckOff {
         myThreadServices.start();
         myThreadCore = new EditCoreThread(WorkPath);
         myThreadCore.start();
-//        myThreadMiuiServices = new EditMiuiServicesThread(WorkPath);
-//        myThreadMiuiServices.start();
-//        myThreadMiuiFramework = new EditMiuiFrameworkThread(WorkPath);
-//        myThreadMiuiFramework.start();
+        if (androidVersion == 12){
+            myThreadMiuiServices = new EditMiuiServicesThread(WorkPath);
+            myThreadMiuiServices.start();
+//            myThreadServices.join();
+            myThreadMiuiFramework = new EditMiuiFrameworkThread(WorkPath);
+            myThreadMiuiFramework.start();
+        }
         editFilesFramework(path);
+        myThreadServices.join();
 //        editFilesCore(path);
 //        editFilesServices(path);
     }
 
     private static void editFilesFramework(String path) throws Exception {
 
-        if (isPatched == 14){
+        if (androidVersion != 12){
+            if (isPatched == 14) {
+                return;
+            }
+        }else if (isPatched == 15){
             return;
         }
         File[] f = (new File(path)).listFiles();

@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static outs.Lives.Belarus.CheckOff.*;
-import static outs.Lives.Belarus.MethodsListFor10and11.*;
+import static outs.Lives.Belarus.MethodsListNew.*;
 
 public class EditCoreThread extends Thread{
 
@@ -31,7 +31,11 @@ public class EditCoreThread extends Thread{
 
     private void editFilesCore(String path) throws IOException {
 
-        if (isPatched == 14){
+        if (androidVersion != 12){
+            if (isPatched == 14) {
+                return;
+            }
+        }else if (isPatched == 15){
             return;
         }
         File[] f = (new File(path)).listFiles();

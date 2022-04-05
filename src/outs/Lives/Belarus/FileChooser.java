@@ -39,7 +39,7 @@ public class FileChooser extends JFrame implements ActionListener
 
     public FileChooser()
     {
-        super("Отключение проверок Android 10+");
+        super("Отключение проверок подписи и целостности MIUI");
         fc = this;
         Toolkit kit = Toolkit.getDefaultToolkit();
         screenSize = kit.getScreenSize();
@@ -73,7 +73,7 @@ public class FileChooser extends JFrame implements ActionListener
         setLocation(screenSize.width/2-200, screenSize.height/2-40);
         setSize(700, 200);
         mainContent.setLayout(new GridLayout(3, 2, 20, 20));
-        mainContent.setBackground(Color.gray);
+//        mainContent.setBackground(Color.gray);
         mainContent.add(btnOpenDir);
         mainContent.add(labelDir);
         mainContent.add(btnAndroidVersion);
