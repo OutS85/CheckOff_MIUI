@@ -3,6 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/CheckOff_jar</output-path>
     <root id="archive" name="CheckOff.jar">
       <element id="module-output" name="CheckOff" />
+      <element id="extracted-dir" path="D:/Download/4pda/syntheticaDark.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Download/synthetica.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Download/tinylaf.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -8,6 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="tinylaf" level="project" />
+    <orderEntry type="library" name="syntheticaDark" level="project" />
+    <orderEntry type="library" name="synthetica" level="project" />
+    <orderEntry type="library" name="synthetica" level="project" />
   </component>
 </module>

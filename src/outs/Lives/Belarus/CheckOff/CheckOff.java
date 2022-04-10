@@ -1,5 +1,8 @@
 package outs.Lives.Belarus.CheckOff;
 
+import outs.Lives.Belarus.MyTextFrame;
+
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.regex.Matcher;
@@ -22,6 +25,7 @@ public class CheckOff {
     private static String WorkPath;
     private static Pattern pattern;
     private static Matcher matcher;
+    private JTextArea textArea;
 
     public static int androidVersion;
 
@@ -33,15 +37,18 @@ public class CheckOff {
     
 
 
-    public CheckOff(String workPath, CheckOffWindow fc, int androidVersion) throws Exception {
+    public CheckOff(String workPath, CheckOffWindow checkOffWindow, int androidVersion, JTextArea textArea) throws Exception {
         long startTime = System.currentTimeMillis();
         WorkPath = workPath;
+        this.textArea = textArea;
         this.androidVersion = androidVersion;
         System.out.println("Текущая папка: " + WorkPath);
-        fc.dispose();
+        this.textArea.append("Текущая папка: " + WorkPath);
+        checkOffWindow.dispose();
         if (!editFilesTarget(WorkPath)){
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             System.out.println("Целевая программа не нашла всех нужных методов или классов на своих местах, поэтому запущена программа общего поиска. Первый раз может занять до двух минут. Терпение...\n");
+            this.textArea.append("\nЦелевая программа не нашла всех нужных методов или классов на своих местах, поэтому запущена программа общего поиска. Первый раз может занять до двух минут. Терпение...");
 //            System.out.println(System.getProperty("java.class.path"));        //На будущее: получение пути из которого запущен jar
             num = 0;
             editFiles(WorkPath);
@@ -50,6 +57,7 @@ public class CheckOff {
         }
         if (!isExist & !isFound & !isTargetProgram) {
             System.out.println("\nНе найдено файлов или методов для патча");
+            this.textArea.append("\nНе найдено файлов или методов для патча");
         }
         int patched;
         if (isTargetProgram){
@@ -58,21 +66,32 @@ public class CheckOff {
             patched = isPatched;
         if (androidVersion == 12){
             System.out.println("\nПропатчено методов: " + patched + " из 15");
-        }else System.out.println("\nПропатчено методов: " + patched + " из 14");
+            this.textArea.append("\nПропатчено методов: " + patched + " из 15");
+        }else {
+            System.out.println("\nПропатчено методов: " + patched + " из 14");
+            this.textArea.append("\nnПропатчено методов: " + patched + " из 14");
+        }
         if (patched == 0){
             System.out.println("\nНеудачно! Не найдено ни одного соответствующего метода.");
+            this.textArea.append("\nНеудачно! Не найдено ни одного соответствующего метода.");
         }else if (patched < 14 & patched > 0){
             System.out.println("\nПропатчено меньше методов, чем надо. Возможно не хватает каких-либо jar файлов.");
+            this.textArea.append("\nПропатчено меньше методов, чем надо. Возможно не хватает каких-либо jar файлов.");
             System.out.println("\nГотово частично.");
+            this.textArea.append("\nГотово частично.");
         }else if (isTargetProgram){
             System.out.println("ГОТОВО! Отработала целевая программа.");
+            this.textArea.append("\nГОТОВО! Отработала целевая программа.");
         }else {
             System.out.println("ГОТОВО! Отработала программа общего поиска.");
+            this.textArea.append("\nГОТОВО! Отработала программа общего поиска.");
             System.out.println("Всего проверено " + filescount + " файлов в " + dirscount + " папках.");
+            this.textArea.append("\nВсего проверено " + filescount + " файлов в " + dirscount + " папках.");
         }
         long endTime = System.currentTimeMillis();
         System.out.println("Затрачено времени: " + (endTime - startTime)/1000 + " секунд");
-        System.exit(0);
+        this.textArea.append("\nЗатрачено времен: " + (endTime - startTime)/1000 + " секунд");
+//        System.exit(0);
     }
 
     private static void editFiles(String path) throws Exception {

@@ -28,6 +28,7 @@ public class CheckOffWindow extends JFrame implements ActionListener
 
     private final Dimension screenSize;
     private final Font font;
+    private final JTextArea textArea;
 
     private String WorkDir = null;
     private int androidVersion = 0;
@@ -37,10 +38,11 @@ public class CheckOffWindow extends JFrame implements ActionListener
 //    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
 //            {"pdf" , "Adobe Reader(*.pdf)"}};
 
-    public CheckOffWindow()
+    public CheckOffWindow(JTextArea textArea)
     {
         super("Отключение проверок подписи и целостности MIUI");
         fc = this;
+        this.textArea = textArea;
         Toolkit kit = Toolkit.getDefaultToolkit();
         screenSize = kit.getScreenSize();
         font = new Font("Courier", Font.BOLD, 14);
@@ -174,7 +176,7 @@ public class CheckOffWindow extends JFrame implements ActionListener
             dialog.setVisible(true);
         }else if (e.getSource() == btnStart) {
             try {
-                new CheckOff(WorkDir, fc, androidVersion);
+                new CheckOff(WorkDir, fc, androidVersion, textArea);
             }catch (Exception ignored){}
         }else if (e.getSource() == btnOk){
             if (andr9.isSelected()) {
