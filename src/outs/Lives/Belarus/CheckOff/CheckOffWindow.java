@@ -1,5 +1,7 @@
 package outs.Lives.Belarus.CheckOff;
 
+import outs.Lives.Belarus.InfoFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +11,6 @@ import java.net.URL;
 public class CheckOffWindow extends JFrame implements ActionListener
 {
     private  JButton  btnOpenDir;
-    private  JButton  btnThanks;
     private  JButton btnAndroidVersion;
     private  JButton btnStart;
     private JButton btnOk;
@@ -28,7 +29,7 @@ public class CheckOffWindow extends JFrame implements ActionListener
 
     private final Dimension screenSize;
     private final Font font;
-    private final JTextArea textArea;
+    private JTextArea textArea;
 
     private String WorkDir = null;
     private int androidVersion = 0;
@@ -38,13 +39,11 @@ public class CheckOffWindow extends JFrame implements ActionListener
 //    private final String[][] FILTERS = {{"docx", "Файлы Word (*.docx)"},
 //            {"pdf" , "Adobe Reader(*.pdf)"}};
 
-    public CheckOffWindow(JTextArea textArea)
+    public CheckOffWindow(Dimension screenSize)
     {
         super("Отключение проверок подписи и целостности MIUI");
         fc = this;
-        this.textArea = textArea;
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        screenSize = kit.getScreenSize();
+        this.screenSize = screenSize;
         font = new Font("Courier", Font.BOLD, 14);
         createMainElements();
         addListeners();
@@ -70,18 +69,21 @@ public class CheckOffWindow extends JFrame implements ActionListener
     {
         //Свойства окна
         setDefaultLookAndFeelDecorated(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        setLocation(screenSize.width/2-200, screenSize.height/2-40);
-        setSize(700, 200);
-        mainContent.setLayout(new GridLayout(3, 2, 20, 20));
-//        mainContent.setBackground(Color.gray);
+        setSize(800, 250);
+        setLocationRelativeTo(null);
+        mainContent.setLayout(null);
         mainContent.add(btnOpenDir);
         mainContent.add(labelDir);
         mainContent.add(btnAndroidVersion);
         mainContent.add(labelAndroVer);
         mainContent.add(btnStart);
-        mainContent.add(btnThanks);
+        btnOpenDir.setBounds(0, 5, 375, 50);
+        btnAndroidVersion.setBounds(0, 75, 375, 50);
+        labelDir.setBounds(377, 5, 525, 50);
+        labelAndroVer.setBounds(377, 75, 525, 50);
+        btnStart.setBounds(0, 140, 800, 60);
         setContentPane(mainContent);
         setBackground(Color.DARK_GRAY);
         setVisible(true);
@@ -107,7 +109,6 @@ public class CheckOffWindow extends JFrame implements ActionListener
     {
         btnOpenDir = new JButton("Открыть директорию");
         btnOpenDir.setFont(font);
-        btnThanks = new JButton("Сказать спасибо автору ;)");
         btnAndroidVersion = new JButton("Версия Android");
         btnAndroidVersion.setFont(font);
         btnStart = new JButton("Пропатчить");
@@ -137,7 +138,6 @@ public class CheckOffWindow extends JFrame implements ActionListener
     private void addListeners()
     {
         btnOpenDir.addActionListener(this);
-        btnThanks.addActionListener(this);
         btnAndroidVersion.addActionListener(this);
         btnStart.addActionListener(this);
         btnOk.addActionListener(this);
@@ -164,10 +164,6 @@ public class CheckOffWindow extends JFrame implements ActionListener
                 btnStart.setEnabled(true);
                 btnStart.setBackground(Color.GREEN);
             }
-        }else if (e.getSource() == btnThanks){
-            try {
-                Desktop.getDesktop().browse(new URL("https://4pda.ru/forum/index.php?showuser=2409458").toURI());
-            }catch (Exception ignored){ }
         }else if (e.getSource() == btnAndroidVersion){
             dialog.setLocation(screenSize.width/2-200, screenSize.height/2-40);
             dialog.setSize(400, 200);
@@ -175,9 +171,17 @@ public class CheckOffWindow extends JFrame implements ActionListener
             dialog.setContentPane(androVerContent);
             dialog.setVisible(true);
         }else if (e.getSource() == btnStart) {
-            try {
-                new CheckOff(WorkDir, fc, androidVersion, textArea);
-            }catch (Exception ignored){}
+            InfoFrame infoFrame = new InfoFrame(screenSize);
+            SwingWorker<Void, String> worker = new SwingWorker<Void, String>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    try {
+                        new CheckOff(WorkDir, fc, androidVersion, infoFrame);
+                    }catch (Exception ignored){}
+                    return null;
+                }
+            };
+            worker.execute();
         }else if (e.getSource() == btnOk){
             if (andr9.isSelected()) {
                 androidVersion = 9;

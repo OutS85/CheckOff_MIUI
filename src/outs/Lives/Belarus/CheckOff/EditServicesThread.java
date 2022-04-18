@@ -57,7 +57,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод checkAppSignature найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод checkAppSignature найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkAppSignature найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se2 && !se21) {
@@ -77,7 +78,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод checkDowngrade найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод checkDowngrade найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkDowngrade найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se3) {
@@ -91,7 +93,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод checkSysAppCrack найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод checkSysAppCrack найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkSysAppCrack найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se4) {
@@ -105,7 +108,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод checkSystemSelfProtection найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод checkSystemSelfProtection найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkSystemSelfProtection найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se5) {
@@ -119,7 +123,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод compareSignatures найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод compareSignatures найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод compareSignatures найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se6) {
@@ -133,7 +138,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод matchSignaturesCompat найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод matchSignaturesCompat найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод matchSignaturesCompat найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!se7) {
@@ -147,7 +153,8 @@ public class EditServicesThread extends Thread {
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод matchSignaturesRecover найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод matchSignaturesRecover найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод matchSignaturesRecover найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                     }

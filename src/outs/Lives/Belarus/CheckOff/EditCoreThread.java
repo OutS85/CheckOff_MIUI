@@ -58,6 +58,8 @@ public class EditCoreThread extends Thread{
                                 isPatched++;
                                 num++;
                                 System.out.println("\n" + num +". Метод isEqual найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод isEqual найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+
                             }
                         }
                         if (!co2) {
@@ -71,7 +73,8 @@ public class EditCoreThread extends Thread{
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод verify([B)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод verify([B)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод verify([B)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!co3) {
@@ -85,7 +88,8 @@ public class EditCoreThread extends Thread{
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод verify([BII)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод verify([BII)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод verify([BII)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!co4) {
@@ -99,7 +103,8 @@ public class EditCoreThread extends Thread{
                                 smaliWriter.close();
                                 isPatched++;
                                 num++;
-                                System.out.println("\n" + num +". Метод verifyManifestHash найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                System.out.println("\n" + num + ". Метод verifyManifestHash найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод verifyManifestHash найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                     }

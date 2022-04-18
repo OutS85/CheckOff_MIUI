@@ -1,6 +1,6 @@
 package outs.Lives.Belarus.CheckOff;
 
-import outs.Lives.Belarus.MyTextFrame;
+import outs.Lives.Belarus.InfoFrame;
 
 import javax.swing.*;
 import java.io.*;
@@ -25,7 +25,7 @@ public class CheckOff {
     private static String WorkPath;
     private static Pattern pattern;
     private static Matcher matcher;
-    private JTextArea textArea;
+    public static JTextArea textArea;
 
     public static int androidVersion;
 
@@ -37,18 +37,20 @@ public class CheckOff {
     
 
 
-    public CheckOff(String workPath, CheckOffWindow checkOffWindow, int androidVersion, JTextArea textArea) throws Exception {
+    public CheckOff(String workPath, CheckOffWindow checkOffWindow, int androidVersion, InfoFrame infoFrame) throws Exception {
         long startTime = System.currentTimeMillis();
         WorkPath = workPath;
-        this.textArea = textArea;
+        textArea = infoFrame.textArea;
+        infoFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.androidVersion = androidVersion;
         System.out.println("Текущая папка: " + WorkPath);
         this.textArea.append("Текущая папка: " + WorkPath);
+        textArea.append("\nВерсия Андройд: " + androidVersion);
         checkOffWindow.dispose();
         if (!editFilesTarget(WorkPath)){
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             System.out.println("Целевая программа не нашла всех нужных методов или классов на своих местах, поэтому запущена программа общего поиска. Первый раз может занять до двух минут. Терпение...\n");
-            this.textArea.append("\nЦелевая программа не нашла всех нужных методов или классов на своих местах, поэтому запущена программа общего поиска. Первый раз может занять до двух минут. Терпение...");
+            this.textArea.append("\nЦелевая программа не нашла всех нужных методов или классов на своих местах, поэтому запущена программа общего поиска. Первый раз может занять до двух минут. Терпение...\n");
 //            System.out.println(System.getProperty("java.class.path"));        //На будущее: получение пути из которого запущен jar
             num = 0;
             editFiles(WorkPath);
@@ -69,7 +71,7 @@ public class CheckOff {
             this.textArea.append("\nПропатчено методов: " + patched + " из 15");
         }else {
             System.out.println("\nПропатчено методов: " + patched + " из 14");
-            this.textArea.append("\nnПропатчено методов: " + patched + " из 14");
+            this.textArea.append("\nПропатчено методов: " + patched + " из 14");
         }
         if (patched == 0){
             System.out.println("\nНеудачно! Не найдено ни одного соответствующего метода.");
@@ -91,6 +93,10 @@ public class CheckOff {
         long endTime = System.currentTimeMillis();
         System.out.println("Затрачено времени: " + (endTime - startTime)/1000 + " секунд");
         this.textArea.append("\nЗатрачено времен: " + (endTime - startTime)/1000 + " секунд");
+        num = 0; filescount = 0; dirscount = 0; isPatched = 0; isPatchedTarget = 0;
+        isExist = false; isFound = false; isTargetProgram = false;
+        fr1 = false; fr2 = false; fr3 = false; se1 = false; se2 = false; se21 = false; se3 = false; se4 = false; se5 = false; se51 = false; se6 = false; se7 = false; co1 = false; co2 = false; co3 = false; co4 = false;
+        infoFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 //        System.exit(0);
     }
 
@@ -142,6 +148,7 @@ public class CheckOff {
                                 isPatched++;
                                 num++;
                                 System.out.println("\n" + num + ". Метод checkCapability(Ljava/lang/String;I)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkCapability(Ljava/lang/String;I)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!fr2) {
@@ -156,6 +163,7 @@ public class CheckOff {
                                 isPatched++;
                                 num++;
                                 System.out.println("\n" + num + ". Метод checkCapability(Landroid/content/pm/PackageParser$SigningDetails;I)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkCapability(Landroid/content/pm/PackageParser$SigningDetails;I)Z найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                         if (!fr3) {
@@ -170,6 +178,7 @@ public class CheckOff {
                                 isPatched++;
                                 num++;
                                 System.out.println("\n" + num + ". Метод checkCapabilityRecover найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
+                                textArea.append("\n" + num + ". Метод checkCapabilityRecover найден и пропатчен в:\n\t" + fileEntry.getAbsolutePath());
                             }
                         }
                     }

@@ -2,24 +2,25 @@ package outs.Lives.Belarus;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-public class MyTextFrame extends JFrame {
+public class InfoFrame extends JFrame {
 
     public JTextArea textArea;
     private JPanel textPanel;
+    private Dimension screenSize;
 
-    public MyTextFrame() throws HeadlessException {
+    public InfoFrame(Dimension screenSize) throws HeadlessException {
 
         super("Ход выполнения программы");
-        setSize(1110, 800);
+        setSize((int)(screenSize.width * 0.85), (int)(screenSize.height * 0.85));
+        this.screenSize = screenSize;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         textArea = createTextArea();
         textPanel = createPanel(textArea);
         setContentPane(textPanel);
+        setLocationRelativeTo(null);
         setVisible(true);
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -37,7 +38,8 @@ public class MyTextFrame extends JFrame {
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        textArea.setSize(1100, 790);
+        textArea.setSize( screenSize.width - 10, screenSize.height - 10);
+        textArea.setFont(new Font("Courier", Font.ITALIC, 11));
         return textArea;
     }
 
