@@ -106,9 +106,9 @@ public class MainContent extends JFrame implements ActionListener {
     private void setRightPanel() throws IOException {
 
         rightPanel.setPreferredSize(new Dimension(mainPanel.getWidth()/2 - 10, mainPanel.getHeight()));
-        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File("src/resources/icon.png"))));
+        JLabel label = new JLabel(new ImageIcon(ImageIO.read(new File("src/resources/drawable/icon_2.png"))));
         rightPanel.add(label);
-        label.setBounds(0, -70, 600, 600);
+        label.setBounds(0, -130, 600, 600);
     }
 
     private void setMainPanel(){

@@ -10,6 +10,10 @@ import java.text.ParseException;
 
 public class Main {
 
+    private static final String MetalLookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
+    private static final String TinyLookAndFeel = "de.muntjak.tinylookandfeel.TinyLookAndFeel";
+    private static final String SyntheticaDarkLookAndFeel = "de.javasoft.synthetica.dark.SyntheticaDarkLookAndFeel";
+
     public static void main(String[] args) throws IOException {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         try {
